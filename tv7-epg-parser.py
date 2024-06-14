@@ -12,8 +12,8 @@ import time
 
 BASE_URL = "https://api.tv.init7.net/api/"
 DATE_FORMAT = '%Y%m%d%H%M%S%z'
-MAX_DOWNLOADS = 10
-MAX_FILE_AGE = 48*60*60
+MAX_DOWNLOADS = 500
+MAX_FILE_AGE = 24*60*60
 TMP_FOLDER = "tmp/"
 TVH_XMLTV_SOCKET = "epggrab/xmltv.sock"
 arg_parser = argparse.ArgumentParser(
@@ -169,7 +169,7 @@ def _downloadFile(filename, url):
         r = requests.get(url, allow_redirects=True)
         if(is_valid_json(r.content)):
             open(filename, 'wb').write(r.content)
-        time.sleep(1)
+        time.sleep(0.1)
         downloadCount = downloadCount+1
     else:
         if args['debug']:

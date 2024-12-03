@@ -14,7 +14,7 @@ BASE_URL = "https://api.tv.init7.net/api/"
 DATE_FORMAT = '%Y%m%d%H%M%S%z'
 MAX_DOWNLOADS = 500
 MAX_FILE_AGE = 24*60*60
-TMP_FOLDER = "tmp/"
+TMP_FOLDER = "/tmp/tv7epg"
 TVH_XMLTV_SOCKET = "epggrab/xmltv.sock"
 arg_parser = argparse.ArgumentParser(
     description='fetch epg data from init7 and return it')
@@ -180,6 +180,12 @@ def _downloadFile(filename, url):
 # curl "${BASE_URL}allowed/" > allowed.json
 # TODO: Check allowed URL
 
+
+# make tmp dir if not already present
+try:
+    os.mkdir(TMP_FOLDER)
+except FileExistsError:
+    pass
 
 ######
 # start building xmltv file

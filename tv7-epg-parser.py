@@ -7,7 +7,7 @@ import requests
 from stat import S_ISSOCK
 from datetime import timedelta
 import socket
-
+import html
 import time
 
 BASE_URL = "https://api.tv.init7.net/api/"
@@ -103,10 +103,8 @@ def addProgrammes(root_elem, programme_data):
                 date_elem.text = str(value)
             elif key == 'icons' and value:
                 for icon_url in value:
-                    # AB: workaround 401 errors from this host
-                    if not icon_url.startswith("https://epg.best/assets/"):
-                        category_elem = etree.SubElement(programme, "icon")
-                        category_elem.set("src", icon_url)
+                    category_elem = etree.SubElement(programme, "icon")
+                    category_elem.set("src", html.unescape(icon_url))
             elif key == 'credits' and value:
                 credits_elem = etree.SubElement(programme, "credits")
                 for credit in value:
